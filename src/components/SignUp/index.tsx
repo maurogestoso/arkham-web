@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes'
 import FirebaseContext, { WithFirebaseProps } from '../Firebase/context';
@@ -32,7 +32,7 @@ const initialSignUpFormState:SignUpFormState = {
 
 type SignUpFormProps = {} & WithFirebaseProps & RouteComponentProps
 
-const SignUpForm = ({firebase, history}:SignUpFormProps) => {
+const SignUpFormBase = ({firebase, history}:SignUpFormProps) => {
   const [state, setState] = useState<SignUpFormState>(initialSignUpFormState)
   const {username, email, passwordOne, passwordTwo, error} = state
   function handleSubmit(e:React.FormEvent) {
@@ -68,6 +68,8 @@ const SignUpForm = ({firebase, history}:SignUpFormProps) => {
     </form>
   )
 }
+
+const SignUpForm = withRouter(SignUpFormBase)
 
 const SignUpLink = () => (
   <p>
