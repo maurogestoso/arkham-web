@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Navigation from '../Navigation'
@@ -11,24 +11,46 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
+import { AuthUser } from "../Firebase/firebase";
+import { FirebaseContext } from "../Firebase";
+import { WithFirebaseProps } from "../Firebase/context";
 
 const App = () => (
-  <Router>
-    <div>
-      <Navigation />
-      
-      <hr />
+  <FirebaseContext.Consumer>
+    {firebase => <AppBase firebase={firebase} />}
+  </FirebaseContext.Consumer>
+)
 
-      <Route exact path={ROUTES.LANDING} component={LandingPage} />
-      <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-      <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-      <Route path={ROUTES.HOME} component={HomePage} />
-      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-      <Route path={ROUTES.ADMIN} component={AdminPage} />
-    </div>
-  </Router>
-);
+type AppBaseProps = {} & WithFirebaseProps
+
+const AppBase = ({firebase}:AppBaseProps) => {
+  const [authUser, setAuthUser] = useState<AuthUser>(null)
+  useEffect(() => {
+    const unsubscribe = firebase?.auth.onAuthStateChanged(authUser => {
+      authUser ? setAuthUser(authUser) : setAuthUser(null)
+    })
+    return function cleanup() {
+      unsubscribe && unsubscribe()
+    }
+  }, [])
+  return (
+    <Router>
+      <div>
+        <Navigation authUser={authUser} />
+        
+        <hr />
+
+        <Route exact path={ROUTES.LANDING} component={LandingPage} />
+        <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+        <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+        <Route path={ROUTES.HOME} component={HomePage} />
+        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+        <Route path={ROUTES.ADMIN} component={AdminPage} />
+      </div>
+    </Router> 
+  )
+};
 
 
 export default App;
