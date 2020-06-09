@@ -1,6 +1,27 @@
 import Firebase from "./firebase";
-import FirebaseContext from "./context";
+import {
+  useAuth,
+  useFirebase,
+  useSession,
+  userContext,
+  firebaseContext,
+} from "./context";
 
-export default Firebase;
+let fb;
 
-export { FirebaseContext };
+export default (function () {
+  if (!fb) {
+    fb = new Firebase();
+    return fb;
+  }
+  return fb;
+})();
+
+export {
+  Firebase,
+  useAuth,
+  useFirebase,
+  useSession,
+  userContext,
+  firebaseContext,
+};

@@ -1,40 +1,43 @@
 import React, { useState } from 'react'
-import { withRouter, RouteComponentProps } from 'react-router-dom'
-import FirebaseContext, { WithFirebaseProps } from '../Firebase/context'
+import { RouteComponentProps } from 'react-router-dom'
+import { useFirebase, Firebase } from '../Firebase'
 import * as ROUTES from '../../constants/routes'
 
-const SignInPage = (props:RouteComponentProps) => (
-  <div>
-    <h1>SignIn</h1>
-    <FirebaseContext.Consumer>
-      {firebase => <SignInForm {...props} firebase={firebase}/>}
-    </FirebaseContext.Consumer>
-  </div>
-)
+export default (props:RouteComponentProps) => {
+  const firebase = useFirebase()!
+  return (
+    <div>
+      <h1>SignIn</h1>
+      <SignInForm {...props} firebase={firebase}/>
+    </div>
+  )
+}
 
-interface SignInFormBaseState {
+interface State {
   email: string
   password: string
   error: Error|null
 }
 
-const initialSignInFormBaseState:SignInFormBaseState = {
+const initialState:State = {
   email: '',
   password: '',
   error: null
 }
 
-type SignInFormBaseProps = {} & WithFirebaseProps & RouteComponentProps
+type Props = {
+  firebase: Firebase
+} & RouteComponentProps
 
-const SignInFormBase = ({firebase, history}:SignInFormBaseProps) => {
-  const [state, setState] = useState<SignInFormBaseState>(initialSignInFormBaseState)
+const SignInForm = ({firebase, history}:Props) => {
+  const [state, setState] = useState<State>(initialState)
   const {email, password, error} = state
 
   const handleSubmit = (e:React.FormEvent) => {
     e.preventDefault()
     firebase?.doSignInWithEmailAndPassword(email, password)
       .then((user) => {
-        setState(initialSignInFormBaseState)
+        setState(initialState)
         console.log({user})
         history.push(ROUTES.HOME)
       })
@@ -59,9 +62,3 @@ const SignInFormBase = ({firebase, history}:SignInFormBaseProps) => {
     </form>
   )
 }
-
-const SignInForm = withRouter(SignInFormBase)
-
-export default SignInPage
-
-export {SignInForm}

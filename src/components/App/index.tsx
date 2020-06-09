@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Navigation from '../Navigation'
@@ -11,49 +11,34 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
-import { AuthUser } from "../Firebase/firebase";
-import { FirebaseContext } from "../Firebase";
-import { WithFirebaseProps } from "../Firebase/context";
-import { AuthUserContext } from "../Session";
+import { useAuth, userContext } from "../Firebase/context";
 
-const App = () => (
-  <FirebaseContext.Consumer>
-    {firebase => <AppBase firebase={firebase} />}
-  </FirebaseContext.Consumer>
-)
-
-type AppBaseProps = {} & WithFirebaseProps
-
-const AppBase = ({firebase}:AppBaseProps) => {
-  const [authUser, setAuthUser] = useState<AuthUser>(null)
-  useEffect(() => {
-    const unsubscribe = firebase?.auth.onAuthStateChanged(authUser => {
-      authUser ? setAuthUser(authUser) : setAuthUser(null)
-    })
-    return function cleanup() {
-      unsubscribe && unsubscribe()
-    }
-  }, [])
+export default () => {
+  const {initializing, user} = useAuth()  
   return (
-    <AuthUserContext.Provider value={authUser}>
-      <Router>
-        <div>
-          <Navigation />
-          
-          <hr />
+    <userContext.Provider value={{user}}>
+      <App />
+    </userContext.Provider>
+  )
+}
 
-          <Route exact path={ROUTES.LANDING} component={LandingPage} />
-          <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-          <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-          <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-          <Route path={ROUTES.HOME} component={HomePage} />
-          <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-          <Route path={ROUTES.ADMIN} component={AdminPage} />
-        </div>
-      </Router> 
-    </AuthUserContext.Provider>
+type Props = {}
+export const App = (props: Props) => {
+  return (
+    <Router>
+      <div>
+        <Navigation />
+        
+        <hr />
+
+        <Route exact path={ROUTES.LANDING} component={LandingPage} />
+        <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+        <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+        <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
+        <Route path={ROUTES.HOME} component={HomePage} />
+        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+        <Route path={ROUTES.ADMIN} component={AdminPage} />
+      </div>
+    </Router> 
   )
 };
-
-
-export default App;

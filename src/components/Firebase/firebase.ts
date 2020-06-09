@@ -34,4 +34,3 @@ class Firebase {
 }
 
 export default Firebase;
-export type AuthUser = firebase.User | null;

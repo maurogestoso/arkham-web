@@ -1,22 +1,22 @@
 import React from 'react'
-import { AuthUserContext } from '../Session'
-import { AuthUser } from '../Firebase/firebase'
+import { useAuth, userContext, useSession } from '../Firebase/context'
 
-const Home = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {authUser => <HomeBase authUser={authUser} />}
-    </AuthUserContext.Consumer>
-  </div>
-)
+export default () => {
+  const {initializing, user} = useAuth()  
+  return (
+    <userContext.Provider value={{user}}>
+      <Home />
+    </userContext.Provider>
+  )
+}
 
-type HomeBaseProps = {authUser:AuthUser}
-
-const HomeBase = ({authUser}:HomeBaseProps) => (
-  <>
-    <h1>Home</h1>
-    <p>Your email: {authUser?.email}</p>
-  </>
-)
-
-export default Home
+type Props = {}
+export const Home = (props: Props) => {
+  const user = useSession()
+  return (
+    <>
+      <h1>Home</h1>
+      <p>Your email: {user?.email}</p>
+    </>
+  )
+}

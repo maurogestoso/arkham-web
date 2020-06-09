@@ -1,14 +1,16 @@
 import React from 'react'
-import FirebaseContext, { WithFirebaseProps } from '../Firebase/context'
+import { useFirebase, Firebase } from '../Firebase'
 
-const SignOutButtonBase = ({firebase}:WithFirebaseProps) => (
+type Props = {
+  firebase: Firebase
+}
+export const SignOutButton = ({firebase}: Props) => (
   <button type="button" onClick={firebase?.doSignOut}>Sign Out</button>
 )
 
-const SignOutButton = () => (
-  <FirebaseContext.Consumer>
-      {firebase => <SignOutButtonBase firebase={firebase}/>}
-    </FirebaseContext.Consumer>
-)
-
-export default SignOutButton
+export default () => {
+  const firebase = useFirebase()!
+  return (
+    <SignOutButton firebase={firebase}/>
+  )
+}

@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes'
-import FirebaseContext, { WithFirebaseProps } from '../Firebase/context';
+import { Firebase, useFirebase } from '../Firebase';
 
+export default (props:RouteComponentProps) => {
+  const firebase = useFirebase()!
+  return (
+    <div>
+      <h1>SignUp</h1>
+      <SignUpForm {...props} firebase={firebase}/>
+    </div>
+  )
+}
 
-const SignUpPage = (props:RouteComponentProps) => (
-  <div>
-    <h1>SignUp</h1>
-    <FirebaseContext.Consumer>
-      {firebase => <SignUpForm {...props} firebase={firebase}/>}
-    </FirebaseContext.Consumer>
-  </div>
-)
-
-type SignUpFormState = {
+type State = {
   username: string
   email: string
   passwordOne: string
@@ -22,7 +22,7 @@ type SignUpFormState = {
   error: Error|null
 }
 
-const initialSignUpFormState:SignUpFormState = {
+const initialState:State = {
   username: '',
   email: '',
   passwordOne: '',
@@ -30,23 +30,27 @@ const initialSignUpFormState:SignUpFormState = {
   error: null,
 }
 
-type SignUpFormProps = {} & WithFirebaseProps & RouteComponentProps
+type Props = {
+  firebase: Firebase
+}  & RouteComponentProps
 
-const SignUpFormBase = ({firebase, history}:SignUpFormProps) => {
-  const [state, setState] = useState<SignUpFormState>(initialSignUpFormState)
+const SignUpForm = ({firebase, history}: Props) => {
+  const [state, setState] = useState<State>(initialState)
   const {username, email, passwordOne, passwordTwo, error} = state
+  
   function handleSubmit(e:React.FormEvent) {
     e.preventDefault()
     firebase?.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         console.log({authUser})
-        setState(initialSignUpFormState)
+        setState(initialState)
         history.push(ROUTES.HOME)
       })
       .catch(error => {
         setState({...state, error})
       })
   }
+  
   function handleChange(e:React.SyntheticEvent) {
     const target = e.target as HTMLInputElement
     setState({
@@ -69,13 +73,8 @@ const SignUpFormBase = ({firebase, history}:SignUpFormProps) => {
   )
 }
 
-const SignUpForm = withRouter(SignUpFormBase)
-
-const SignUpLink = () => (
+export const SignUpLink = () => (
   <p>
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 )
-
-export default SignUpPage
-export {SignUpForm, SignUpLink}

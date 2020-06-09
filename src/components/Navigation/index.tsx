@@ -3,18 +3,17 @@ import { Link } from 'react-router-dom';
 
 import SignOutButton from '../SignOut'
 import * as ROUTES from '../../constants/routes';
-import { AuthUser } from '../Firebase/firebase';
-import { AuthUserContext } from '../Session';
+import { useSession } from '../Firebase/context';
 
-type NavigationProps = {}
-
-const Navigation = ({}:NavigationProps) => (
-  <div>
-    <AuthUserContext.Consumer>
-      {authUser => authUser ? <NavigationAuth /> : <NavigationNonAuth />}
-    </AuthUserContext.Consumer>
-  </div>
-);
+type Props = {}
+const Navigation = (props: Props) => {
+  const user = useSession()
+  return (
+    <div>
+        {user ? <NavigationAuth /> : <NavigationNonAuth />}
+    </div>
+  )
+};
 
 const NavigationAuth = () => (
   <ul>
