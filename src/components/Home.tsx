@@ -1,8 +1,9 @@
 import React from 'react'
-import { useAuth, userContext, useSession } from '../firebase'
+import { useAuthentication, userContext, useSession, useAuthorization } from '../firebase'
 
 export default () => {
-  const {initializing, user} = useAuth()  
+  const {initializing, user} = useAuthentication()
+  useAuthorization(u => !!u)
   return (
     <userContext.Provider value={{user}}>
       <Home />

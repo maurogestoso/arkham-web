@@ -10,10 +10,10 @@ import AccountPage from './Account';
 import AdminPage from './Admin';
 
 import * as ROUTES from '../constants/routes';
-import { useAuth, userContext } from "../firebase/context";
+import { useAuthentication, userContext } from "../firebase/context";
 
 export default () => {
-  const {initializing, user} = useAuth()  
+  const {initializing, user} = useAuthentication()  
   return (
     <userContext.Provider value={{user}}>
       <App />

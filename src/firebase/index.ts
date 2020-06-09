@@ -1,10 +1,11 @@
 import Firebase from "./firebase";
 import {
-  useAuth,
+  useAuthentication,
   useFirebase,
   useSession,
   userContext,
   firebaseContext,
+  useAuthorization,
 } from "./context";
 
 let fb;
@@ -19,9 +20,10 @@ export default (function () {
 
 export {
   Firebase,
-  useAuth,
+  useAuthentication,
+  useAuthorization,
   useFirebase,
   useSession,
-  userContext,
   firebaseContext,
+  userContext,
 };
