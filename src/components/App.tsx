@@ -25,10 +25,10 @@ type Props = {}
 export const App = (props: Props) => {
   return (
     <Router>
-      <div>
-        <Navigation />
-        
-        <hr />
+      <>
+        <header>
+          <Navigation />
+        </header>
 
         <Route exact path={ROUTES.LANDING} component={LandingPage} />
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -36,7 +36,7 @@ export const App = (props: Props) => {
         <Route path={ROUTES.HOME} component={HomePage} />
         <Route path={ROUTES.ACCOUNT} component={AccountPage} />
         <Route path={ROUTES.ADMIN} component={AdminPage} />
-      </div>
+      </>
     </Router> 
   )
 };
