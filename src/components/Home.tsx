@@ -4,6 +4,11 @@ import { useAuthentication, userContext, useSession, useAuthorization } from '..
 export default () => {
   const {initializing, user} = useAuthentication()
   useAuthorization(u => !!u)
+  if (initializing) {
+    return (
+      <p>Counting tentacles...</p>
+    )
+  }
   return (
     <userContext.Provider value={{user}}>
       <Home />

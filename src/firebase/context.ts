@@ -42,7 +42,10 @@ export const useAuthentication = () => {
 
   React.useEffect(() => {
     const unsubscribe = fb.auth.onAuthStateChanged(onChange);
-    return () => unsubscribe();
+    return () => {
+      console.log("about to unsubscribe");
+      unsubscribe();
+    };
   }, []);
 
   return state;
@@ -52,12 +55,8 @@ export const useAuthorization = (
   condition: (u: firebase.User | null) => boolean
 ) => {
   const history = useHistory();
-  useEffect(() => {
-    const unsubscribe = fb.auth.onAuthStateChanged((authUser) => {
-      if (!condition(authUser)) {
-        history.push(ROUTES.SIGN_IN);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  const { user, initializing } = useAuthentication();
+  if (!initializing && !condition(user)) {
+    history.push(ROUTES.SIGN_IN);
+  }
 };
