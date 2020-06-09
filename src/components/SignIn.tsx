@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { useFirebase, Firebase } from '../Firebase'
-import * as ROUTES from '../../constants/routes'
+import { useFirebase, Firebase } from '../firebase'
+import * as ROUTES from '../constants/routes'
 
 export default (props:RouteComponentProps) => {
   const firebase = useFirebase()!

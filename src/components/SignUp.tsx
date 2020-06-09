@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import * as ROUTES from '../../constants/routes'
-import { Firebase, useFirebase } from '../Firebase';
+import * as ROUTES from '../constants/routes'
+import { Firebase, useFirebase } from '../firebase';
 
 export default (props:RouteComponentProps) => {
   const firebase = useFirebase()!
@@ -46,7 +46,7 @@ const SignUpForm = ({firebase, history}: Props) => {
         setState(initialState)
         history.push(ROUTES.HOME)
       })
-      .catch(error => {
+      .catch((error: Error) => {
         setState({...state, error})
       })
   }

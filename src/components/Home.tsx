@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth, userContext, useSession } from '../Firebase/context'
+import { useAuth, userContext, useSession } from '../firebase'
 
 export default () => {
   const {initializing, user} = useAuth()  

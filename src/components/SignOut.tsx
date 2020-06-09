@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFirebase, Firebase } from '../Firebase'
+import { useFirebase, Firebase } from '../firebase'
 
 type Props = {
   firebase: Firebase
