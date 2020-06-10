@@ -21,7 +21,7 @@ export const Home = (props: Props) => {
   const user = useSession()
   return (
     <>
-      <h1>Home</h1>
+      <h1>PUTO</h1>
       <p>Your email: {user?.email}</p>
     </>
   )
