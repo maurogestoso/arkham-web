@@ -1,17 +1,7 @@
 import React, { useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import { useFirebase, Firebase } from '../firebase'
+import { useHistory } from 'react-router-dom'
+import { useFirebase } from '../firebase'
 import * as ROUTES from '../constants/routes'
-
-export default (props:RouteComponentProps) => {
-  const firebase = useFirebase()!
-  return (
-    <div>
-      <h1>SignIn</h1>
-      <SignInForm {...props} firebase={firebase}/>
-    </div>
-  )
-}
 
 interface State {
   email: string
@@ -25,11 +15,9 @@ const initialState:State = {
   error: null
 }
 
-type Props = {
-  firebase: Firebase
-} & RouteComponentProps
-
-const SignInForm = ({firebase, history}:Props) => {
+const SignInForm = () => {
+  const firebase = useFirebase()!
+  const history = useHistory()
   const [state, setState] = useState<State>(initialState)
   const {email, password, error} = state
 
@@ -62,3 +50,5 @@ const SignInForm = ({firebase, history}:Props) => {
     </form>
   )
 }
+
+export default SignInForm

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components'
 
 import SignOutButton from './SignOut'
 import * as ROUTES from '../constants/routes';
@@ -8,39 +9,39 @@ import { useSession } from '../firebase/context';
 type Props = {}
 const Navigation = (props: Props) => {
   const user = useSession()
-  return (
-    <div>
-        {user ? <NavigationAuth /> : <NavigationNonAuth />}
-    </div>
-  )
+  return user ? <NavigationAuth /> : <NavigationNonAuth />
 };
 
+const NavList = styled.ul`
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+`
+
+const NavItem = styled.li`
+  margin-left: 1rem;
+`
+
 const NavigationAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
+  <>
+    <NavList>
+      <NavItem>
+        <Link to={ROUTES.HOME}>Home</Link>
+      </NavItem>
+      <NavItem>
+        <Link to={ROUTES.ACCOUNT}>Account</Link>
+      </NavItem>
+      <NavItem>
+        <SignOutButton />
+      </NavItem>
+    </NavList>
+  </>
 );
 
 const NavigationNonAuth = () => (
-  <ul>
-    <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
-  </ul>
+  <NavList>
+  </NavList>
 );
 
 export default Navigation;

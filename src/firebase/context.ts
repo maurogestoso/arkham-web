@@ -57,6 +57,6 @@ export const useAuthorization = (
   const history = useHistory();
   const { user, initializing } = useAuthentication();
   if (!initializing && !condition(user)) {
-    history.push(ROUTES.SIGN_IN);
+    history.push(ROUTES.LANDING);
   }
 };

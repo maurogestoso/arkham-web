@@ -1,8 +1,10 @@
 import React from 'react'
+import SignInForm from './SignIn'
 
 const Landing = () => (
   <div>
-    <h1>Landing</h1>
+    <h1>Sign In</h1>
+    <SignInForm />
   </div>
 )
 
