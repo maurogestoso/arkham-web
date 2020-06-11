@@ -9,21 +9,20 @@ export function normalizeCardsByCode(cards: any) {
   }, {});
 }
 
-export function fetchSet(setName: string) {
-  return fetch(`${BASE_URL}/api/public/cards/${setName}`)
-    .then((res) => res.json())
-    .then((set) => {
-      set.forEach((card) => {
-        if (card.linked_card) {
-          set.push(card.linked_card);
-        }
-      });
-      return set;
-    });
+export async function fetchSet(setName: string) {
+  const res = await fetch(`${BASE_URL}/api/public/cards/${setName}`);
+  const set = await res.json();
+  set.forEach((card: any) => {
+    if (card.linked_card) {
+      set.push(card.linked_card);
+    }
+  });
+  return set;
 }
 
-export function fetchImage(path: string) {
-  return fetch(`${BASE_URL}${path}`).then((res) => res.buffer());
+export async function fetchImage(path: string) {
+  const res = await fetch(`${BASE_URL}${path}`);
+  return await res.buffer();
 }
 
 export function fetchCardImages(cards: any, cb: any) {
