@@ -10,9 +10,16 @@ export function normalizeCardsByCode(cards: any) {
 }
 
 export function fetchSet(setName: string) {
-  return fetch(`${BASE_URL}/api/public/cards/${setName}`).then((res) =>
-    res.json()
-  );
+  return fetch(`${BASE_URL}/api/public/cards/${setName}`)
+    .then((res) => res.json())
+    .then((set) => {
+      set.forEach((card) => {
+        if (card.linked_card) {
+          set.push(card.linked_card);
+        }
+      });
+      return set;
+    });
 }
 
 export function fetchImage(path: string) {
@@ -23,7 +30,11 @@ export function fetchCardImages(cards: any, cb: any) {
   cards.forEach(async (card: any) => {
     try {
       const imgBuf = await fetchImage(card.imagesrc);
-      cb(card, imgBuf);
+      cb(card.code, imgBuf);
+      if (card.backimagesrc) {
+        const imgBuf = await fetchImage(card.backimagesrc);
+        cb(`${card.code}b`, imgBuf);
+      }
     } catch (err) {
       console.log(err);
     }
