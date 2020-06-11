@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAuthentication, userContext, useSession, useAuthorization } from '../firebase'
+import Game from './Game'
 
 export default () => {
   const {initializing, user} = useAuthentication()
@@ -21,8 +22,7 @@ export const Home = (props: Props) => {
   const user = useSession()
   return (
     <>
-      <h1>PUTO</h1>
-      <p>Your email: {user?.email}</p>
+      <Game />
     </>
   )
 }
