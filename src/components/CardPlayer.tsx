@@ -1,7 +1,7 @@
 import React from "react";
-import CardImage from "./Image";
+import CardImage from "./CardImage";
 import { useDispatch } from "react-redux";
-import { actions } from "../../state/ui/cardViewer";
+import { actions } from "../state/ui/cardViewer";
 
 type Props = {
   code?: string;

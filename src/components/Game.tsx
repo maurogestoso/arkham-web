@@ -1,8 +1,8 @@
 import React from "react";
 
 import BoardWithTabs from "./BoardWithTabs";
-import PlayerCard from "./Card/Player";
-import CardViewer from "./Card/Viewer";
+import PlayerCard from "./CardPlayer";
+import CardViewer from "./CardViewer";
 
 const styles = {
   outline: { outline: "2px solid black" } as React.CSSProperties,

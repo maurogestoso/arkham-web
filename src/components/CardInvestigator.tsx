@@ -1,6 +1,6 @@
 import React from "react";
 
-import CardImage from "./Image";
+import CardImage from "./CardImage";
 
 type Props = {
   code: string;

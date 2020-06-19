@@ -1,6 +1,6 @@
 import React from "react";
 import PlayerDeck from "./PlayerDeck";
-import InvestigatorCard from "./Card/Investigator";
+import InvestigatorCard from "./CardInvestigator";
 
 const InvestigatorBoard = () => {
   return (

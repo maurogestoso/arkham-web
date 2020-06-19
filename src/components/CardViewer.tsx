@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import CardImage from "./Image";
+import { RootState } from "../store";
+import CardImage from "./CardImage";
 
 const CardViewer = () => {
   const code = useSelector((state: RootState) => state.ui.cardViewer.code);

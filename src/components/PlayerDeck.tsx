@@ -1,6 +1,6 @@
 import React from "react";
 
-import PlayerCard from "./Card/Player";
+import PlayerCard from "./CardPlayer";
 
 const PlayerDeck = () => {
   return <PlayerCard faceDown />;
