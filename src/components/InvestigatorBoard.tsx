@@ -4,7 +4,7 @@ import InvestigatorCard from "./Card/Investigator";
 
 const InvestigatorBoard = () => {
   return (
-    <div className="columns" style={{ height: 500 }}>
+    <div className="columns">
       <div
         className="column is-3"
         style={{ display: "flex", flexDirection: "column" }}

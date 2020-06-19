@@ -2,6 +2,7 @@ import React from "react";
 
 import BoardWithTabs from "./BoardWithTabs";
 import PlayerCard from "./Card/Player";
+import CardViewer from "./Card/Viewer";
 
 const styles = {
   outline: { outline: "2px solid black" } as React.CSSProperties,
@@ -11,7 +12,9 @@ const Game = () => {
   return (
     <div className="columns">
       <div className="column is-9" style={{ ...styles.outline }}>
-        <BoardWithTabs />
+        <div style={{ height: 600 }}>
+          <BoardWithTabs />
+        </div>
         <PlayerHand />
       </div>
       <div className="column is-3" style={{ ...styles.outline }}>
@@ -21,16 +24,9 @@ const Game = () => {
   );
 };
 
-const CardViewer = () => {
-  const style = {} as React.CSSProperties;
-  return <div style={style}>Card Viewer</div>;
-};
-
 const PlayerHand = () => {
   const style = {
     display: "flex",
-    position: "absolute",
-    bottom: 0,
   } as React.CSSProperties;
   return (
     <div style={style}>

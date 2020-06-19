@@ -7,7 +7,7 @@ type Props = {
 };
 
 const InvestigatorCard = ({ code }: Props) => {
-  return <CardImage code={code!} horizontal />;
+  return <CardImage code={code} orientation="horizontal" />;
 };
 
 export default InvestigatorCard;
