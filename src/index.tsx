@@ -1,17 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
-import firebase, {firebaseContext} from './firebase'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+
+import App from "./components/App";
+import firebase, { firebaseContext } from "./firebase";
+import store from "./store";
+
+import * as serviceWorker from "./serviceWorker";
+import "bulma/css/bulma.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <firebaseContext.Provider value={firebase}>
-      <App />
-    </firebaseContext.Provider>
+    <Provider store={store}>
+      <firebaseContext.Provider value={firebase}>
+        <App />
+      </firebaseContext.Provider>
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
