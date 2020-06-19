@@ -24,11 +24,10 @@ export const App = (props: Props) => {
     <Router>
       <>
         <Header />
-        <section className="section">
-          <Route exact path={ROUTES.LANDING} component={LandingPage} />
-          <Route path={ROUTES.HOME} component={HomePage} />
-          <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-        </section>
+
+        <Route exact path={ROUTES.LANDING} component={LandingPage} />
+        <Route path={ROUTES.HOME} component={HomePage} />
+        <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       </>
     </Router>
   );
