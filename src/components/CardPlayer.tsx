@@ -15,8 +15,9 @@ const PlayerCard = ({ code, faceDown }: Props) => {
   ) : (
     <CardImage
       code={code!}
-      onMouseEnter={() => dispatch(actions.setCardViewer({ code }))}
-      onMouseLeave={() => dispatch(actions.clearCardViewer())}
+      onClick={() => dispatch(actions.setSelected({ code }))}
+      onMouseEnter={() => dispatch(actions.setHover({ code }))}
+      onMouseLeave={() => dispatch(actions.clearHover())}
     />
   );
 };

@@ -1,14 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface CardViewerState {
+  selected: {
+    code: string;
+  };
+  hover: {
+    code: string;
+  };
   code: string;
 }
 
 const initialState = {
-  code: "",
+  hover: {
+    code: "",
+  },
+  selected: {
+    code: "",
+  },
 };
 
-interface ActionSetCardViewer {
+interface ActionSetHover {
+  payload: {
+    code: "";
+  };
+}
+
+interface ActionSetSelected {
   payload: {
     code: "";
   };
@@ -18,16 +35,27 @@ const cardViewerSlice = createSlice({
   name: "cardViewer",
   initialState,
   reducers: {
-    setCardViewer: {
-      reducer: (state, action: ActionSetCardViewer) => {
+    setHover: {
+      reducer: (state, action: ActionSetHover) => {
         console.log("setCardViewer", { code: action.payload.code });
-        state.code = action.payload.code;
+        state.hover = { ...action.payload };
         return state;
       },
       prepare: ({ code }) => ({ payload: { code } }),
     },
-    clearCardViewer() {
-      return { code: "" };
+    clearHover(state) {
+      state.hover = { code: "" };
+      return state;
+    },
+    setSelected: {
+      reducer: (state, action: ActionSetSelected) => {
+        state.selected = { ...action.payload };
+      },
+      prepare: ({ code }) => ({ payload: { code } }),
+    },
+    clearSelected(state) {
+      state.selected = { code: "" };
+      return state;
     },
   },
 });

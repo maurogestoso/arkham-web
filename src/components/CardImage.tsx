@@ -6,6 +6,7 @@ type Props = {
   code: string;
   orientation: "vertical" | "horizontal";
   size: "big" | "small";
+  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
